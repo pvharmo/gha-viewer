@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>List Item Example</title>
+		<style>
+			:root {
+				--bg-color: #f5f7fb;
+				--card-bg: #ffffff;
+				--accent: #2563eb;
+				--accent-soft: #dbeafe;
+				--text-main: #111827;
+				--text-muted: #6b7280;
+				--border-color: #e5e7eb;
+				--danger: #dc2626;
+				--success: #16a34a;
+				--radius-lg: 12px;
+				--radius-sm: 6px;
+				--shadow-soft: 0 10px 25px rgba(15, 23, 42, 0.08);
+				--font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+			}
+
+			body {
+				margin: 0;
+				padding: 40px;
+				font-family: var(--font-family);
+				background: radial-gradient(circle at top left, #eef2ff, #f9fafb);
+				color: var(--text-main);
+			}
+
+			.record-list-wrapper {
+				max-width: 720px;
+				margin: 0 auto;
+			}
+
+			.record-list-title {
+				font-size: 1.5rem;
+				font-weight: 600;
+				margin-bottom: 16px;
+				color: #0f172a;
+			}
+
+			.record-list {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+			}
+
+			.record-item {
+				background: var(--card-bg);
+				border-radius: var(--radius-lg);
+				padding: 16px 20px;
+				margin-bottom: 12px;
+				box-shadow: var(--shadow-soft);
+				border: 1px solid rgba(148, 163, 184, 0.2);
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 16px;
+				transition:
+					transform 0.15s ease,
+					box-shadow 0.15s ease,
+					border-color 0.15s ease,
+					background-color 0.15s ease;
+			}
+
+			.record-item:hover {
+				transform: translateY(-1px);
+				box-shadow: 0 14px 35px rgba(15, 23, 42, 0.14);
+				border-color: rgba(37, 99, 235, 0.4);
+				background-color: #f9fafb;
+			}
+
+			.record-main {
+				display: flex;
+				flex-direction: column;
+				gap: 6px;
+				min-width: 0;
+				flex: 1;
+			}
+
+			.record-id-row {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				flex-wrap: wrap;
+			}
+
+			.record-id {
+				font-weight: 600;
+				font-size: 0.98rem;
+				color: #0f172a;
+			}
+
+			.record-id-label {
+				font-size: 0.78rem;
+				text-transform: uppercase;
+				letter-spacing: 0.07em;
+				color: var(--text-muted);
+			}
+
+			.record-branch {
+				font-size: 0.9rem;
+				color: var(--text-muted);
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+
+			.branch-pill {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				background: var(--accent-soft);
+				color: var(--accent);
+				border-radius: 999px;
+				padding: 2px 9px;
+				font-size: 0.78rem;
+				font-weight: 500;
+			}
+
+			.branch-pill-dot {
+				width: 6px;
+				height: 6px;
+				border-radius: 999px;
+				background: var(--accent);
+			}
+
+			.record-meta {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				flex-wrap: wrap;
+				justify-content: flex-end;
+			}
+
+			.meta-group {
+				display: flex;
+				flex-direction: column;
+				align-items: flex-end;
+				gap: 4px;
+				min-width: 90px;
+			}
+
+			.meta-label {
+				font-size: 0.72rem;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: var(--text-muted);
+			}
+
+			.meta-value {
+				font-size: 0.92rem;
+				font-weight: 500;
+				color: var(--text-main);
+			}
+
+			.score-chip {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				min-width: 52px;
+				padding: 4px 10px;
+				border-radius: 999px;
+				background: #ecfdf5;
+				color: #15803d;
+				border: 1px solid #bbf7d0;
+				font-size: 0.85rem;
+				font-weight: 600;
+			}
+
+			.score-chip--medium {
+				background: #fef9c3;
+				border-color: #facc15;
+				color: #854d0e;
+			}
+
+			.score-chip--low {
+				background: #fee2e2;
+				border-color: #fecaca;
+				color: #b91c1c;
+			}
+
+			.valid-badge {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				font-size: 0.8rem;
+				font-weight: 500;
+				padding: 3px 10px;
+				border-radius: 999px;
+				border: 1px solid transparent;
+			}
+
+			.valid-badge--true {
+				color: var(--success);
+				background: #ecfdf3;
+				border-color: #bbf7d0;
+			}
+
+			.valid-badge--false {
+				color: var(--danger);
+				background: #fef2f2;
+				border-color: #fecaca;
+			}
+
+			.valid-dot {
+				width: 8px;
+				height: 8px;
+				border-radius: 999px;
+				background: currentColor;
+			}
+
+			.level-tag {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				background: #eff6ff;
+				color: #1d4ed8;
+				border-radius: 999px;
+				padding: 3px 10px;
+				font-size: 0.8rem;
+				border: 1px solid #bfdbfe;
+				font-weight: 500;
+			}
+
+			.level-badge-dot {
+				width: 6px;
+				height: 6px;
+				border-radius: 999px;
+				background: #1d4ed8;
+			}
+
+			/* Responsive tweaks */
+			@media (max-width: 640px) {
+				body {
+					padding: 24px 16px;
+				}
+
+				.record-item {
+					flex-direction: column;
+					align-items: flex-start;
+				}
+
+				.record-meta {
+					width: 100%;
+					justify-content: space-between;
+				}
+
+				.meta-group {
+					align-items: flex-start;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="record-list-wrapper">
+			<div class="record-list-title">Records</div>
+			<ul class="record-list">
+				<!-- Example list item 1 -->
+				<li class="record-item">
+					<div class="record-main">
+						<div class="record-id-row">
+							<div>
+								<div class="record-id-label">ID</div>
+								<div class="record-id">USR-10428</div>
+							</div>
+							<div class="branch-pill">
+								<span class="branch-pill-dot"></span>
+								<span>Branch: main</span>
+							</div>
+						</div>
+						<div class="record-branch">
+							Session record for primary evaluation pipeline.
+						</div>
+					</div>
+					<div class="record-meta">
+						<div class="meta-group">
+							<div class="meta-label">Score</div>
+							<div class="meta-value score-chip">92.4</div>
+						</div>
+						<div class="meta-group">
+							<div class="meta-label">Valid</div>
+							<div class="meta-value">
+								<span class="valid-badge valid-badge--true">
+									<span class="valid-dot"></span>
+									Valid
+								</span>
+							</div>
+						</div>
+						<div class="meta-group">
+							<div class="meta-label">Level</div>
+							<div class="meta-value">
+								<span class="level-tag">
+									<span class="level-badge-dot"></span>
+									Level 3
+								</span>
+							</div>
+						</div>
+					</div>
+				</li>
+
+				<!-- Example list item 2 -->
+				<li class="record-item">
+					<div class="record-main">
+						<div class="record-id-row">
+							<div>
+								<div class="record-id-label">ID</div>
+								<div class="record-id">USR-10429</div>
+							</div>
+							<div class="branch-pill">
+								<span class="branch-pill-dot"></span>
+								<span>Branch: experimental</span>
+							</div>
+						</div>
+						<div class="record-branch">A/B test group, awaiting final validation.</div>
+					</div>
+					<div class="record-meta">
+						<div class="meta-group">
+							<div class="meta-label">Score</div>
+							<div class="meta-value score-chip score-chip--medium">71.0</div>
+						</div>
+						<div class="meta-group">
+							<div class="meta-label">Valid</div>
+							<div class="meta-value">
+								<span class="valid-badge valid-badge--false">
+									<span class="valid-dot"></span>
+									Invalid
+								</span>
+							</div>
+						</div>
+						<div class="meta-group">
+							<div class="meta-label">Level</div>
+							<div class="meta-value">
+								<span class="level-tag">
+									<span class="level-badge-dot"></span>
+									Level 1
+								</span>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</body>
+</html>
