@@ -112,7 +112,7 @@
 		</FileUpload.Dropzone>
 	</FileUpload>
 {:else}
-	<main class="flex h-dvh">
+	<main class="flex h-dvh max-w-dvw">
 		<aside class="flex-2 mr-2 min-w-[390px]">
 			<div><Filter bind:filterValues /></div>
 			<div><ScoresList {scores} onselect={(score) => (selectedScore = score)} /></div>

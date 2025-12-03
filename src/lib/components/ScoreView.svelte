@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Score } from '$lib/scores';
+	import Markdown from './Markdown.svelte';
 
 	const { score }: { score: Score | null } = $props();
 
@@ -110,7 +111,7 @@
 			</div>
 		</header>
 
-		<!-- Judgement -->
+		<!-- Prompt -->
 		<section
 			class="card bg-surface-50 border border-surface-200/80 rounded-2xl px-6 py-4 space-y-2"
 		>
@@ -130,15 +131,12 @@
 					explanation
 				</span>
 			</h2>
-			<p class="text-sm text-surface-700 whitespace-pre-line">
-				{score.judgement}
-			</p>
+
+			<Markdown source={score.judgement} />
 		</section>
 
 		<!-- Workflows: original vs generated -->
-		<section
-			class="card bg-surface-100 border border-surface-300/70 rounded-2xl px-6 py-4 space-y-4"
-		>
+		<section class="card bg-surface-100 border border-surface-300/70 rounded-2xl p-4 space-y-2">
 			<div class="flex items-center justify-between gap-4">
 				<h2 class="text-sm font-semibold text-surface-900">Workflows</h2>
 				<p class="text-[11px] text-surface-500 uppercase tracking-wide">
@@ -170,9 +168,7 @@
 							<span class="text-[11px] text-surface-400"> reference </span>
 						</div>
 						<div class="max-h-512 overflow-auto text-xs font-mono bg-surface-0">
-							<pre class="px-3 py-2 text-surface-800 whitespace-pre">
-{score.original_workflow}
-            </pre>
+							<Markdown source={score.original_workflow} language="yaml" />
 						</div>
 					</div>
 				</div>
@@ -200,9 +196,7 @@
 							<span class="text-[11px] text-surface-400"> candidate </span>
 						</div>
 						<div class="max-h-512 overflow-auto text-xs font-mono bg-surface-0">
-							<pre class="px-3 py-2 text-surface-800 whitespace-pre">
-{score.generated_workflow}
-            </pre>
+							<Markdown source={score.generated_workflow} language="yaml" />
 						</div>
 					</div>
 				</div>
@@ -210,11 +204,9 @@
 		</section>
 
 		<!-- Lint output & vulnerabilities -->
-		<section class="grid gap-4 lg:grid-cols-2">
+		<section class="grid gap-2 lg:grid-cols-2">
 			<!-- Lint results -->
-			<div
-				class="card bg-surface-50 border border-surface-200/80 rounded-2xl px-6 py-4 space-y-3"
-			>
+			<div class="card bg-surface-50 border border-surface-200/80 rounded-2xl p-2 space-y-3">
 				<div class="flex items-center justify-between gap-2">
 					<h2 class="text-sm font-semibold text-surface-900">Lint results</h2>
 					<span
@@ -254,9 +246,7 @@
 			</div>
 
 			<!-- Vulnerabilities -->
-			<div
-				class="card bg-surface-50 border border-surface-200/80 rounded-2xl px-6 py-4 space-y-3"
-			>
+			<div class="card bg-surface-50 border border-surface-200/80 rounded-2xl p-2 space-y-3">
 				<div class="flex items-center justify-between gap-2">
 					<h2 class="text-sm font-semibold text-surface-900">Vulnerabilities</h2>
 					<span
