@@ -1,0 +1,14 @@
+name: "Test"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "${{ 2 + 3 }}"
+        run: "echo hello world! ${{ 3 + 3}}"
+      - name: checkout ${{ 5 + 5 }}
+        uses: actions/checkout@v6
+      - run: echo ${{ 5+3 }}
