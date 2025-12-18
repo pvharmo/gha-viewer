@@ -8,7 +8,7 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - name: "${{ 2 }}"
-        run: "echo hello world! ${{ github.repository }}"
+        run: 'echo hello world'! ${{ github.repository }}'
       - name: checkout ${{ 5 }}
         uses: actions/checkout@v6
       - run: echo ${{ github.repository }}
